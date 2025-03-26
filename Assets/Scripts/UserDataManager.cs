@@ -4,7 +4,7 @@ using UnityEngine;
 public class UserDataManager : MonoBehaviour
 {
     // 데이터 저장
-    public static void SaveUserData(UserData userData)
+    public static void Save(UserData userData)
     {
         string json = JsonUtility.ToJson(userData, true);
         string path = Path.Combine(Application.persistentDataPath, userData.id + ".json");
@@ -14,7 +14,7 @@ public class UserDataManager : MonoBehaviour
     }
 
     // 데이터 불러오기
-    public static UserData LoadUserData(string id)
+    public static UserData Load(string id)
     {
         string path = Path.Combine(Application.persistentDataPath, id + ".json");
 
@@ -30,5 +30,14 @@ public class UserDataManager : MonoBehaviour
             Debug.LogWarning($"[LoadUserData] 해당 ID의 파일이 없습니다: {id}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// 이미 존재하는 ID인지 검사
+    /// </summary>
+    public static bool IsUserExists(string id)
+    {
+        string path = Path.Combine(Application.persistentDataPath, id + ".json");
+        return File.Exists(path);
     }
 }
